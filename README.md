@@ -1,27 +1,24 @@
-# Next.js + Tailwind CSS Example
+# Image Gallery Website Nodejs
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.2)](https://tailwindcss.com/blog/tailwindcss-v3-2) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+This is an image gallery with dynamic content from a PostgreSQL database, with support for content updates without neding to redeploy.
 
-## Deploy your own
+## Programs Used
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+1. [Next js](https://nextjs.org/)
+2. TypeScript
+3. [Tailwind CSS](https://tailwindcss.com/)
+4. [Supabase](https://supabase.com/)
+5. [vercel](https://vercel.com/)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+#### Packages Used
 
-## How to use
+## Things Learned
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+1. Typescript helps make code much less buggy.
+2. How to easily achive typewriter effect with react-simple-typewriter
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-```
+## Features
 
-```bash
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
+1. Can easily view my skills and the things I have learned.
 
-```bash
-pnpm create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+## Demo Website

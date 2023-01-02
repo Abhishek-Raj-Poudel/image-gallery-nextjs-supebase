@@ -1,86 +1,93 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+// now we will create client and use it to make a database of images
+import { createClient } from "@supabase/supabase-js";
+// this only runs on the surver
+export async function getStaticProps() {
+  const superbaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPERBASE_URL || "",
+    process.env.SUPERBASE_SERVICE_ROLE_KEY || ""
+  );
+  // a new quary done to supabase Admin from images to select all according to the order of id
+  const { data } = await superbaseAdmin.from("images").select("*").order("id");
 
-const Home: NextPage = () => {
+  return {
+    props: {
+      images: data,
+    },
+  };
+}
+
+type Image = {
+  id: number;
+  href: string;
+  imageSrc: string;
+  name: string;
+  username: string;
+};
+
+const Home = ({ images }: { images: Image[] }) => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className=" relative max-w-2xl mx-auto py-10 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
       <Head>
-        <title>Create Next App</title>
+        <title>Image Gallary App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
+      <main>
+        <h1 className="text-center font-black text-5xl md:text-7xl mb-20 font-serif">
+          Done Splash
         </h1>
-
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
-
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and its API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div className="grid grid-cols-1 gap-y-10 sm:grid-cols2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 pb-5">
+          {/* image here */}
+          {images?.map((image) => (
+            <ImageComponent key={image.id} image={image} />
+          ))}
+          {/* <ImageComponent /> */}
         </div>
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </a>
+      <footer className="flex pt-10 w-full items-center justify-center border-t">
+        Made by Abhishek raj poudel
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
+
+//helper funciton that combines a list of classname
+function cn(...classes: string[]) {
+  return classes.filter(Boolean).join("");
+}
+// this will blur and then unblur as a loading mechanism.
+function ImageComponent({ image }: { image: Image }) {
+  const [isLoading, setLoading] = useState(true);
+
+  return (
+    <Link href={image.href} className="group bg-gray-100 rounded-lg pb-2">
+      <div className="aspect-w-1 aspect-h-1 xl:aspect-w-7 xl:aspect-h-8 w-full overflow-hidden rounded-t-lg ">
+        <Image
+          src={image.imageSrc}
+          alt=""
+          width={1920}
+          height={1080}
+          className={cn(
+            "group-hover:opacity-75 duration-700 ease-in-out object-cover ",
+            isLoading
+              ? "grayscale blur-2xl scale-110"
+              : "grayscale-0 blur-0 scale-100"
+          )}
+          onLoadingComplete={() => setLoading(false)}
+        />
+      </div>
+      <h3 className="mt-4 ml-4 text-sm text-gray-700">{image.name}</h3>
+      <p className="mt-1 ml-4 text-lg font-medium text-gray-900">
+        {image.username}
+      </p>
+    </Link>
+  );
+}
