@@ -14,11 +14,9 @@ This is an image gallery with dynamic content from a PostgreSQL database, with s
 
 ## Things Learned
 
-1. Typescript helps make code much less buggy.
-2. How to easily achive typewriter effect with react-simple-typewriter
-
-## Features
-
-1. Can easily view my skills and the things I have learned.
+1. How to use SQL database from supabase.
+2. Lazy loading. And its banifit.
 
 ## Demo Website
+
+[Demo](https://image-gallery-nextjs-supebase-5171bjvji-abhishek-raj-poudel.vercel.app/)
