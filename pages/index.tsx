@@ -41,7 +41,7 @@ const Home = ({ images }: { images: Image[] }) => {
         <h1 className="text-center font-black text-5xl md:text-7xl mb-20 font-serif">
           Done Splash
         </h1>
-        <div className="grid grid-cols-1 gap-y-10 sm:grid-cols2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 pb-5">
+        <div className="grid grid-cols-1 gap-y-10 sm:grid-cols2 gap-x-6 md:grid-cols-3 xl:grid-cols-4 xl:gap-x-8 pb-5">
           {/* image here */}
           {images?.map((image) => (
             <ImageComponent key={image.id} image={image} />
